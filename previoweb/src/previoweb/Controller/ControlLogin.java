@@ -3,6 +3,7 @@ package previoweb.Controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.persistence.Query;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -53,7 +54,9 @@ public class ControlLogin extends HttpServlet {
         	String usuario = request.getParameter("email");
             String password = request.getParameter("password");
             ClienteDao uDao = new ClienteDao();
-            Cliente us = uDao.find(usuario);
+            Query q = uDao.getEm().createQuery("select u from Cliente u where u.email = ?1");
+            q.setParameter(1, usuario);
+            Cliente us = (Cliente) q.getSingleResult();
             if(us!=null){
             	if(us.getClave().contentEquals(password)){
             		
