@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+            <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="x" uri="http://java.sun.com/jsp/jstl/xml" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -14,8 +18,13 @@
 
 <section id="team" class="pb-5">
   <div class="container">
-  <h5 class="section-title h1">SERVICIOS DE ${nombredetienda}</h5>
-
+  <c:set var="carrera" scope="request" value="${requestScope.carrera}"/>
+<form action="" method="post">
+  <h5 class="section-title h1">SERVICIOS DE ${carrera.nombre}</h5>
+<br>
+<div class="col-xs-12 col-sm-6 col-md-3">
+            	<a href="registroServicio.jsp" class="btn btn-lg btn-primary btn-block text-uppercase font-weight-bold mb-2 text-light" type="submit">Nuevo Servicio</a>
+            </div>
 
   <div class="row">
     <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
@@ -133,7 +142,7 @@
           </a>
     </li>
   </ul>
-
+</form>
 </div>
 </section>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

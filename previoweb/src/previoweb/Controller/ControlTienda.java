@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
+import previo.dao.ServicioDao;
 import previo.dao.TiendaDao;
+import previo.entities.Servicio;
 import previo.entities.Tienda;
 
 /**
@@ -34,8 +36,24 @@ public class ControlTienda extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+response.setContentType("text/html;charset=UTF-8");
+        
+HttpSession session = request.getSession(true);
+        request.setCharacterEncoding("UTF-8");
+        String accion = request.getParameter("accion");
+  
+            switch (accion){
+                case "ver":
+                Integer idTxt = Integer.parseInt(request.getParameter("id"));
+                TiendaDao cDao = new TiendaDao();
+                Tienda c = cDao.find(idTxt);
+                request.setAttribute("carrera", c);
+                session.setAttribute("idTienda", idTxt); 
+                request.getRequestDispatcher("/servicios.jsp").forward(request, response);
+                	break;              
+                default:
+                    throw new AssertionError();
+            } 
 	}
 
 	/**
@@ -71,15 +89,23 @@ public class ControlTienda extends HttpServlet {
         	t.setWeb(web);
         	t.setImagen(imagen);
         	tDao.insertar(t);
-        	out.println("<script src='https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.4/sweetalert2.all.js'></script>");
-            out.println("<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>");
-            out.println("<script>");
-            out.println("$(document).ready(function(){");
-            out.println("swal ('OK','Registro de Tienda, Exitoso','success' )");
-            out.println("});");
-            out.println("</script>");
             RequestDispatcher rd3=request.getRequestDispatcher("/index.jsp");
             rd3.include(request, response);
+        	break;
+        case "Registro":
+        	Integer tienda = (int) session.getAttribute("idTienda");
+        	String usuario = request.getParameter("nombre");
+            String desc = request.getParameter("descripcion");
+            TiendaDao uDao = new TiendaDao();
+            Tienda tiendaBean = uDao.find(tienda);
+            Servicio m = new Servicio();
+            m.setTiendaBean(tiendaBean);
+        	m.setNombre(usuario);
+        	m.setDescripcion(desc);
+            ServicioDao mDao = new ServicioDao();
+            mDao.insertar(m);
+            RequestDispatcher rd4=request.getRequestDispatcher("/servicios.jsp");
+            rd4.include(request, response);
         	break;
         default:
     		throw new AssertionError();
