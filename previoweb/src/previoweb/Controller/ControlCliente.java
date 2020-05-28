@@ -11,21 +11,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
+import previo.dao.ClienteDao;
 import previo.dao.TiendaDao;
+import previo.entities.Cliente;
 import previo.entities.Tienda;
 
 /**
- * Servlet implementation class ControlTienda
+ * Servlet implementation class ControlCliente
  */
-@WebServlet("/ControlTienda")
-public class ControlTienda extends HttpServlet {
+@WebServlet("/ControlCliente")
+public class ControlCliente extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ControlTienda() {
+    public ControlCliente() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -51,31 +52,19 @@ public class ControlTienda extends HttpServlet {
         switch (accion){
         case "Registrar":
         	String nombre = request.getParameter("nombre");
-            String lema = request.getParameter("lema");
-            String descripcion = request.getParameter("descripcion");
             String email = request.getParameter("email");
             String password = request.getParameter("password");
-            String propietario = request.getParameter("propietario");
-            String facebook = request.getParameter("facebook");
-            String web = request.getParameter("web");
-            String imagen = request.getParameter("imagen");
-            TiendaDao tDao = new TiendaDao();
-            Tienda t = new Tienda();
+            ClienteDao tDao = new ClienteDao();
+            Cliente t = new Cliente();
             t.setNombre(nombre);
-        	t.setLema(lema);
-        	t.setDescripcion(descripcion);
         	t.setEmail(email);
         	t.setClave(password);
-        	t.setPropietario(propietario);
-        	t.setFacebook(facebook);
-        	t.setWeb(web);
-        	t.setImagen(imagen);
         	tDao.insertar(t);
         	out.println("<script src='https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.4/sweetalert2.all.js'></script>");
             out.println("<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>");
             out.println("<script>");
             out.println("$(document).ready(function(){");
-            out.println("swal ('OK','Registro de Tienda, Exitoso','success' )");
+            out.println("swal ('OK','Registro de Cliente, Exitoso','success' )");
             out.println("});");
             out.println("</script>");
             RequestDispatcher rd3=request.getRequestDispatcher("/index.jsp");
