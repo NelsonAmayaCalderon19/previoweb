@@ -1,0 +1,29 @@
+           *{
+           margin:0;
+           padding:0;
+           
+           }
+           body{
+           padding: 20px;
+           }
+            th{
+                background-color:#94CFFA;
+                color: #F13143; 
+            }
+
+td{
+    color: black !important; 
+    font-size: 16px; 
+    text-align: center;  
+} 
+#volver{
+	float: right;
+}
+h1,#volver{
+	display: inline;
+}
+h1{
+	color: #F13143;
+	text-align: center;
+	font-family: times new roman;
+}
